@@ -6,6 +6,7 @@ dotenv.config();
 const connection = mysql.createConnection({
     host: 'sql.freedb.tech',
     user: 'freedb_studygroup',
+    port: 3306,
     password: '?kgygurU&w6SZFw',
     database: 'freedb_studygroup'
 });

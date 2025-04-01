@@ -8,7 +8,10 @@ const connection = mysql.createConnection({
     user: 'freedb_studygroup',
     port: 3306,
     password: '?kgygurU&w6SZFw',
-    database: 'freedb_studygroup'
+    database: 'freedb_studygroup',
+    ssl: {
+        rejectUnauthorized: true
+    }
 });
 
 connection.connect((err) => {

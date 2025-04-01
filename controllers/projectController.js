@@ -1,24 +1,23 @@
 const db = require('../config/db');
 
-exports.addProject = (req, res) => {
+exports.addProject = async (req, res) => {
     const { name, description } = req.body;
-    const query = 'INSERT INTO projects (name, description, status) VALUES (?, ?, 0)';
-    db.query(query, [name, description], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.status(201).json({ message: 'Project added successfully', projectId: result.insertId });
-    });
+    const query = 'INSERT INTO projects (name, description, status) VALUES ($1, $2, 0) RETURNING id';
+
+    try {
+        const { rows } = await db.query(query, [name, description]); // Using async/await for PostgreSQL queries
+        res.status(201).json({ message: 'Project added successfully', projectId: rows[0].id });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
-exports.getProjects = (req, res) => {
+exports.getProjects = async (req, res) => {
     const query = 'SELECT * FROM projects';
-    db.query(query, (err, results) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
 
-        const mappedResults = results.map((project) => {
+    try {
+        const { rows } = await db.query(query);
+        const mappedResults = rows.map((project) => {
             let statusText;
             switch (project.status) {
                 case 0:
@@ -40,5 +39,7 @@ exports.getProjects = (req, res) => {
         });
 
         res.json(mappedResults);
-    });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };

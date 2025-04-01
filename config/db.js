@@ -1,23 +1,21 @@
-const mysql = require('mysql2'); // Use mysql2 instead of mysql
+const { Client } = require('pg'); // Use pg instead of mysql2
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const connection = mysql.createConnection({
-    host: 'sql.freedb.tech',
-    user: 'freedb_studygroup',
-    port: 3306,
-    password: '?kgygurU&w6SZFw',
-    database: 'freedb_studygroup',
-    ssl: false
-});
-
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.stack);
-        return;
+const client = new Client({
+    host: 'dpg-cvlkvrre5dus73ajhfq0-a.oregon-postgres.render.com', // PostgreSQL host
+    user: 'root', // PostgreSQL username
+    port: 5432, // Default PostgreSQL port
+    password: 'EV1K2UJ3FHYqUPT9cQWzte4PHKeGhlIv', // PostgreSQL password
+    database: 'studygroup', // Database name
+    ssl: {
+        rejectUnauthorized: false // Disable strict SSL validation (adjust as needed)
     }
-    console.log('Connected to the database as id', connection.threadId);
 });
 
-module.exports = connection;
+client.connect()
+    .then(() => console.log('Connected to PostgreSQL database successfully'))
+    .catch(err => console.error('Error connecting to the database:', err.stack));
+
+module.exports = client;

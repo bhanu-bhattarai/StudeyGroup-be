@@ -15,6 +15,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 app.use(cors({
     origin: '*', // Replace with the origin you want to allow

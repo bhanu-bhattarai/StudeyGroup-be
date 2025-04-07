@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const client = new Client({
-    host: 'dpg-cvlkvrre5dus73ajhfq0-a.oregon-postgres.render.com', // PostgreSQL host
+    host: 'dpg-cvlkvrre5dus73ajhfq0-a', // PostgreSQL host
     user: 'root', // PostgreSQL username
     port: 5432, // Default PostgreSQL port
     password: 'EV1K2UJ3FHYqUPT9cQWzte4PHKeGhlIv', // PostgreSQL password

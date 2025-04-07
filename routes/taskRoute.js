@@ -13,5 +13,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 router.post('/upload', upload.single('file'), taskController.fileupload);
 router.get('/view/uploads', taskController.getUploadedFileByTaskId);
+router.get('/download', taskController.downloadFile);
+
 
 module.exports = router;
